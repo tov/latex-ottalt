@@ -1,0 +1,78 @@
+%% File: ottalt.ins
+%% Copyright 2011 Jesse A. Tov
+%%
+%% This is the ottalt installation file for extracting package and driver
+%% files from the original source file.  Simply process it with
+%% TeX or LaTeX.
+
+\input docstrip.tex
+\keepsilent
+
+\usedir{tex/latex/ottalt}
+
+\preamble
+
+Copyright (C) 2011 by Jesse A. Tov
+
+This file may be distributed and/or modified under the conditions of the
+LaTeX Project Public License, either version 1.2 of this license or (at
+your option) any later version. The latest version of this license is
+in:
+
+   http://www.latex-project.org/lppl.txt
+
+and version 1.2 or later is part of all distributions of LaTeX
+version 1999/12/01 or later.
+
+\endpreamble
+
+\edef\MakefilePreamble{
+\string#^^J
+\string# This is file `\outFileName ',^^J
+\string# generated with the docstrip utility.^^J
+\string#^^J
+\string# The original source files were:^^J
+\string#^^J
+\string# ottalt.dtx\space\space(with options: `makefile') ^^J
+\string#^^J
+\string# generated with the docstrip utility.^^J
+\string# Copyright (C) 2011 by Jesse A. Tov^^J
+\string#^^J
+\string# This file may be distributed and/or modified under the^^J
+\string# conditions of the LaTeX Project Public License, either^^J
+\string# version 1.2 of this license or (at your option) any later^^J
+\string# version. The latest version of this license is in:^^J
+\string#^^J
+\string#\space\space\space http://www.latex-project.org/lppl.txt^^J
+\string#^^J
+\string# and version 1.2 or later is part of all distributions of LaTeX^^J
+\string# version 1999/12/01 or later.^^J
+\string#^^J
+\string#^^J
+}
+
+\edef\MakefilePostamble{
+\string#^^J
+\string# End of file `\outFileName ',^^J
+}
+
+\generate{\file{ottalt.sty}{\from{ottalt.dtx}{package}}
+          \file{listproc.sty}{\from{listproc.dtx}{package}}
+          \askforoverwritefalse
+          \file{ottalt.ott}{\nopostamble
+                            \from{ottalt.dtx}{ott}}
+          \file{Makefile.sample.pre}{\usepreamble\MakefilePreamble
+                                     \usepostamble\MakefilePostamble
+                                     \from{ottalt.dtx}{makefile}}}
+
+\obeyspaces
+
+\Msg{*********************************************************}
+\Msg{* ottalt.sty                                            *}
+\Msg{*                                                       *}
+\Msg{* To produce the documentation run the file             *}
+\Msg{* ottalt.dtx through LaTeX.                             *}
+\Msg{*                                                       *}
+\Msg{*********************************************************}
+
+\endbatchfile

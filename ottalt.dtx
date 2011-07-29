@@ -1,0 +1,1414 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Jesse A. Tov <tov@ccs.neu.edu>
+% ----------------------------------------------------
+% 
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%    http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX 
+% version 1999/12/01 or later.
+%
+% ------------------------------------------------------------------
+% This is a LaTeX package to make it easy to refer to nested labels
+% using both an outer number (such as a theorem number) and an inner
+% number (such as an item in an enumeration).
+% ------------------------------------------------------------------
+%
+%   *** The package file:
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{ottalt}
+%<package> [2011/04/04 v0.5 alternate Ott layout style]
+%
+%   *** The driver file:
+%<driver>\NeedsTeXFormat{LaTeX2e}
+%
+%   *** date, version, and stuff:
+%\fi
+%\ProvidesFile{ottalt}
+%  [2011/04/04 v0.5 alternate Ott layout style]
+% ^^A   Bugfix: \texttt{Rrefrulestex} was
+% ^^A  |RULEs| by default; now it's |Rules|.
+% \changes{v0.2}{2011/03/30}{Included listproc.sty}
+% \changes{v0.1}{2011/03/25}{Initial documented release}
+%
+% \CheckSum{457}
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[lineBreakHack]{ottalt} \relax
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hypdoc}
+\inputott{ottalt.ott}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{ottalt.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \GetFileInfo{ottalt}
+%
+% \DoNotIndex{\newcommand,\newenvironment,\def,\relax,\do,\@gobble}
+% \DoNotIndex{\if,\ifx,\else,\fi,\providecommand,\let,\global,\ignorespaces}
+% \DoNotIndex{\@undefined,\expandafter,\@for,\@ifnextchar,\addtolength}
+% \DoNotIndex{\aftergroup,\begin,\dp,\ht,\wd,\end,\ifdim}
+% \DoNotIndex{\@firstoftwo,\@secondoftwo,\@notfound,\@tester}
+% \DoNotIndex{\addtocounter,\advance,\edef,\empty,\gdef,\ifnum}
+% \DoNotIndex{\long,\newcounter,\renewcommand,\setcounter,\the,\toksdef}
+% \DoNotIndex{\value,\xdef,\\,\begingroup,\endgroup,\x,\a}
+% 
+% {\catcode`\|=0 \catcode`\\=12
+%  |gdef|bslash{\}}
+% \makeatletter\relax
+%
+% \newcommand{\usemacro}[2][altusage]{\relax
+%   \texttt{\bslash#2}\relax
+%   \indexmacro[#1]{#2}\relax
+% }
+% \newcommand{\defmacro}[2][usage]{\relax
+%   \hypertarget{macro:#2}{\usemacro[#1]{#2}}\relax
+% }
+% \newcommand{\indexmacro}[2][altusage]{\relax
+%   \index{#2=\string\verb!*+\bslash#2+\string|#1}\relax\iffalse!\fi
+% }
+% \newcommand{\useenviron}[2][altusage]{\relax
+%   \texttt{#2}\relax
+%   \indexenviron[#1]{#2}\relax
+% }
+% \newcommand{\defenviron}[2][usage]{\relax
+%   \hypertarget{environ:#2}{\useenviron[#1]{#2}}\relax
+% }
+% \newcommand{\indexenviron}[2][altusage]{\relax
+%   \index{#2={\string\ttfamily\space#2} (environment)\string|#1}\relax
+%   \index{environments:>#2={\string\ttfamily\space#2}\string|#1}\relax
+% }
+% \newcommand{\useoption}[2][altusage]{\relax
+%   \texttt{#2}\relax
+%   \indexoption[#1]{#2}\relax
+% }
+% \newcommand{\seeoption}[2][altusage]{\relax
+%   \hyperlink{option:#2}{\texttt{#2}}\relax
+%   \indexoption[#1]{#2}\relax
+% }
+% \newcommand{\defoption}[2][usage]{\relax
+%   \hypertarget{option:#2}{\useoption[#1]{#2}}\relax
+% }
+% \newcommand{\indexoption}[2][altusage]{\relax
+%   \index{#2={\string\ttfamily\space#2} (package option)\string|#1}\relax
+%   \index{package options:>#2={\string\ttfamily\space#2}\string|#1}\relax
+% }
+% \newcommand{\useother}[2][altusage]{\relax
+%   \texttt{#2}\relax
+%   \indexother[#1]{#2}\relax
+% }
+% \newcommand{\defother}[2][usage]{\relax
+%   \useother[#1]{#2}\relax
+% }
+% \newcommand{\indexother}[2][usage]{\relax
+%   \index{#2=\string\verb!*+#2+\string|#1}\relax\iffalse!\fi
+% }
+% \newcommand{\altusage}[1]{\emph{(#1)}}
+%
+% {
+% \makeatletter
+% \global\let\doc@old@tabular\tabular
+% \global\def\doctabular{\begingroup\catcode`\|=12\relax\doc@tabular}
+% \global\def\doc@tabular#1{\endgroup\doc@old@tabular{#1}}
+% }
+% \let\enddoctabular\endtabular
+%
+% \catcode`\|=12\relax
+% \newenvironment{decl}[1][3ex]
+%     {\par\addvspace{#1}\noindent
+%      \begin{tabular}{|l|l|}\hline\ignorespaces}
+%     {\\\hline\end{tabular}\nopagebreak\par\addvspace{1ex}\noindent
+%      \aftergroup\ignorespaces}
+% \catcode`\|=\active\relax
+%
+% \newcounter{macrosenv}
+% \newenvironment{macros}[1]
+%   {\setcounter{macrosenv}{0}
+%    \@for\@each@macro:=#1\do{
+%      \addtocounter{macrosenv}{1}
+%      \expandafter\macro\expandafter{\csname\@each@macro\endcsname}
+%    }}
+%   {\@whilenum\value{macrosenv}>0\do{
+%      \addtocounter{macrosenv}{-1}
+%      \endmacro
+%    }}
+%
+% \newNTclass{nonterm}
+% \newnonterm t \tau
+% \newnonterm e e
+% \newnonterm a \alpha
+% \newnonterm x x
+% \newnonterm G \Gamma
+%
+% \title{The \textsf{ottalt} package}
+% \author{Jesse A. Tov \\ \texttt{tov@ccs.neu.edu}}
+% \date{This document
+%   corresponds to \textsf{\filename}~\fileversion, dated \filedate.}
+% 
+% \maketitle
+%
+% \tableofcontents
+%
+% \section{Introduction}
+% \label{sec:intro}
+%
+% The purpose of this package is to provide an alternate style for
+% laying out grammars and inference rules generated by Ott
+% (\url{http://www.cl.cam.ac.uk/~pes20/ott/}).  The goal is to produce
+% high-quality output suitable for inclusion in articles or technical
+% reports, while making it easier to access various commands that Ott
+% defines in its output.  (This package makes no attempt to compress
+% Ott-generated grammars to fit in space-limited situations, however.)
+%
+% To use \textsf{ottalt}, one must generate standalone \LaTeX{} definitions
+% from an |.ott| source file. To make these suitable for inclusion from another
+% \LaTeX{} document, pass the |-tex_wrap false| option to Ott. For
+% details, I've included a sample Makefile in \S\ref{sec:makefile}.
+% Then, supposing you've generated Ott definitions in
+% \meta{stem}|.ott.tex|, load them in your \LaTeX{} document with
+% \begin{quote}
+% |\inputott{|\meta{stem}|.ott}|
+% \end{quote}
+% Optionally, if you supply the |-tex_name_prefix |\meta{prefix} option
+% to Ott, you should also tell |\inputott| about the prefix, since that
+% will tell it the names of some commands to redefine:
+% |\inputott|\oarg{prefix}|{|\meta{stem}|.ott}|.
+%
+% Then, the easiest way to print Ott-defined grammars and rules is with
+% the \usemacro{drules} and \usemacro{nonterms} commands, each of which
+% takes a comma separated list of Ott rule or nonterminal names. For
+% example, suppose your Ott file contains nonterminals |t| and |e|, like
+% this:
+%    \begin{macrocode}
+%<*ott>
+grammar
+t {{ tex \nonterm t }} :: tp_ ::= {{ com types }}
+  | a            ::   :: var  {{ com type variable }}
+  | t1 -> t2     ::   :: arr  {{ com function }}
+  | all a . t    ::   :: all  {{ com univeral }}
+  | { t' / a } t :: M :: subst
+  | ( t )        :: S :: parens
+
+e {{ tex \nonterm e }} :: tm_ ::= {{ com terms }}
+  | x            ::   :: var  {{ com variable }}
+  | \ x : t . e  ::   :: abs  {{ com abstraction }}
+  | e1 e2        ::   :: app  {{ com application }}
+  | /\ a . e     ::   :: tabs {{ com type abstraction }}
+  | e [ t ]      ::   :: tapp {{ com type application }}
+  | { t / a } e  :: M :: tsubst
+  | ( e )        :: S :: parens
+
+G {{ tex \nonterm G }} :: env_ ::= {{ com typing contexts }}
+  | empty        ::   :: nil  {{ com empty }}
+  | G , x : t    ::   :: var  {{ com variable assumption }}
+  | G, a         ::   :: tvar {{ com type variable assumption }}
+%</ott>
+%    \end{macrocode}
+% Then you can print grammars for |t| and |e| like this:
+% \begin{quote}
+%   |\nonterms{t,e}|
+% \end{quote}
+% We could easily add |G| as well, or we could print it elsewhere.
+% The result appears in figure~\ref{fig:nonterms}.
+%
+% \begin{figure}
+%   \nonterms{t,e}
+%   \caption{An example of \usemacro{nonterms}}
+%   \label{fig:nonterms}
+% \end{figure}
+%
+% Similarly, we can define inference rules in Ott and then easily
+% include them in a document.  Suppose we define these type
+% rules using Ott:
+%    \begin{macrocode}
+%<*ott>
+defns Jtype :: '' ::=
+defn G |- e : t :: :: typing :: T_ {{ com term typing }} by
+
+x : t in G
+---------- :: Var
+G |- x : t
+
+G, x:t1 |- e : t2
+----------------------- :: Abs
+G |- \x:t1.e : t1 -> t2
+
+G |- e1 : t' -> t
+G |- e2 : t'
+----------------- :: App
+G |- e1 e2 : t
+
+G, a |- e : t
+-------------------- :: TAbs
+G |- /\a.e : all a.t
+
+G |- e : all a.t'
+G |- t ok
+------------------- :: TApp
+G |- e[t] : {t/a}t'
+%</ott>
+%    \end{macrocode}
+% This defines macros such as |\ottdruleTXXVar| for typesetting
+% \rref{T-Var}.
+% We can display some or all of them using \usemacro{drules}. For
+% example, we may want to show only three of them:
+% \begin{verbatim}
+%   \drules[T]{$[[G |- e : t]]$}
+%             {term typing, selected rules}
+%             {Var,Abs,App}\end{verbatim}
+% The result appears in figure~\ref{fig:drules}.\footnote{%
+% In the sample code, we use the double bracket notation that requires
+% passing the \LaTeX{} document through Ott as a preprocessor. This
+% documentation is not actually processed in that way, but the
+% \texttt{Makefile} in \S\ref{sec:makefile} gives a rule for doing that
+% preprocessing.}
+%
+% \begin{figure}
+%   \drules[T]{$\Gamma \vdash \nonterm e : \nonterm t$}
+%             {term typing, selected rules}
+%             {Var,Abs,App}
+%   \caption{An example of \usemacro{drules}}
+%   \label{fig:drules}
+% \end{figure}
+%
+% The examples above use this package's facility for managing
+% nonterminal symbols.
+% For example, the Ott code gives a |tex| morphism of
+% |\nonterm t| for nonterminal |t|.  This is set up in two stages.
+% First, we declare a new group of nonterminals using
+% \usemacro{newNTclass}, naming the new class |nonterm|:
+% \begin{verbatim}
+%   \newNTclass{nonterm}\end{verbatim}
+% This results in the definition of three new macros:
+% \usemacro{newnonterm} and \usemacro{newnonterms} for declaring new
+% nonterminal symbols belonging to the |nonterm| class, and
+% \usemacro{nonterm} for referring to them. We then declare five
+% nonterminal symbols in the new class:
+% \begin{verbatim}
+%   \newnonterm t \tau
+%   \newnonterm e e
+%   \newnonterm a \alpha
+%   \newnonterm x x
+%   \newnonterm G \Gamma\end{verbatim}
+% This associates a short name, such as |t|, with the actual code for
+% printing that nonterminal, in this case |\tau|. Then, we can refer to
+% it as |\nonterm t|.  This makes it convenient to configure how
+% nonterminal symbols appear in Ott output. It includes support for
+% switching between two versions of the nonterminals, which is useful,
+% for example, to have color and black-and-white modes.
+%
+% \subsection{The Line Break Hack}
+% \label{sec:lbh}
+%
+% The ``line break hack'' is a method for specifying line breaks between
+% premises in Ott inference rules so that the line breaks appear in in
+% the final \LaTeX{} document. The idea is to emit a \TeX{} control
+% sequence, \usemacro{ottlinebreakhack}, after any premises where we
+% want to force a break. Then, the definition of \usemacro{ottpremise}
+% from this package looks for that and uses it to force a break.
+%
+% One way to do this is to add a production the Ott's |formula|
+% nonterminal, which allows specifying additional formulas that may be
+% used as premises in judgments.  I add a production that looks like
+% this:
+% \begin{verbatim}
+%  | formula \\\\ :: :: lbh {{ tex [[formula]] \ottlinebreakhack }}\end{verbatim}
+% The effect of this is to allow writing |\\\\| after any premise in an
+% Ott inference rule (on the same line). This yields a formula that
+% translates to \LaTeX{} just like the original formula, but with
+% |\ottlinebreakhack| after it.
+%
+% Interpretation of the line break hack is \emph{not enabled by
+% default}. To turn it on, you need to pass the |lineBreakHack| option
+% when loading the package.  See \S\ref{sec:options} for information on
+% the other two options related to line breaking.
+%
+% \subsection{Requirements}
+%
+% The \textsf{ottalt} package depends on five other packages.  Three are
+% part of the standard \LaTeX{} distribution, but two others must be
+% downloaded.
+% \begin{description}
+%   \item[\sf{ifthen}] Standard \LaTeX{} package
+%   \item[\sf{keyval}] Standard \LaTeX{} package
+%   \item[\sf{listproc}] Non-standard, available at
+%     \url{http://www.ccs.neu.edu/~tov/code/latex/}
+%   \item[\sf{mathpartir}] Non-standard, available at
+%     \url{http://cristal.inria.fr/~remy/latex/}
+% \end{description}
+%
+% Additionally, \textsf{ottalt} will cooperate with the
+% \textsf{hyperref} package, if it is loaded, to provide hyperlinks from
+% inference rule references to their definitions.
+% There is also an option to load the \textsf{supertabular} package and
+% use it for presenting grammars.
+%
+% \section{Command Reference}
+%
+% \subsection{Loading \& Options}
+% \label{sec:options}
+%
+% \begin{decl}
+%   \usemacro{usepackage}\oarg{ottalt-options}|{ottalt}|
+% \end{decl}
+% The package supports these options:
+% \begin{description}
+% \item[\defoption{alternateNonterms}]\strut\par
+%   This tells the package to use the alternate styling for nonterminal
+%   symbols defined using the system described in \S\ref{sec:smv}.
+%   When a new nonterminal is declared with the
+%   |\new|\meta{class}|s|\marg{name}\marg{text}\marg{alt-text}, then it
+%   normally prints as \meta{text}, but this option causes it to print
+%   as \meta{alt-text} instead.
+% \item[\defoption{supertabular}]\strut\par
+%   Load the \textsf{supertabular} package and use the
+%   \useenviron{supertabular} environment for grammars.
+%   \changes{v0.4}{2011/04/04}{
+%     Uses \texttt{tabular} instead of \texttt{supertabular}
+%     environment for grammars by default now; added the
+%     \texttt{supertabular} package option to get the old behavior.
+%   }
+% \item[\defoption{implicitPremiseBreaks},
+%       \defoption{lineBreakHack},
+%       \defoption{implicitLineBreakHack}]\strut\par
+% These three options specify different linebreaking behavior in
+% inference rules, all of which involve the ``line break hack''
+% (\S\ref{sec:lbh}).
+% If option |implicit|\-|Premise|\-|Breaks| is enabled, then any line breaks
+% specified by the line break hack are ignored, and all
+% \usemacro{inferrule*} premises are separated by |\\|, which allows
+% |\inferrule*| to decide where to break lines between premises. If option
+% |lineBreakHack| is enabled, then there are no implicit breaks:
+% requested line breaks are passed to |\inferrule*| as |\\\\|, which
+% forces a break, and other
+% premises are separated by \usemacro{and}, which prohibits a break.
+% Finally, option
+% |implicitLineBreakHack| respected requested line breaks by passing
+% them as |\\\\|, but allows automatic line breaks elsewhere by using
+% |\\| to separate remaining premises.
+% \end{description}
+%
+% \begin{decl}
+%   \defmacro{inputott} \oarg{prefix} \marg{ott-tex-src}
+% \end{decl}
+% Load the Ott definitions from \marg{ott-tex-src} and then redefine
+% several Ott macros.  The default names for Ott macros all begin with
+% |ott|, but if the prefix has been changed by providing the
+% |-tex_name_prefix |\meta{prefix} option to Ott,
+% then passing the same prefix
+% to |\inputott| will cause it to redefine the correct macros.
+%
+% \begin{decl}
+%   \defmacro{renewottcommands} \oarg{prefix}
+% \end{decl}
+% Redefine the Ott commands (using \meta{prefix} if supplied or |ott| by
+% default).  This is ordinarily called by |\inputott|, but can be used
+% directly if the Ott definitions are loaded some other way first.
+%
+% \subsection{Rule References}
+%
+% This package provides a system for hyperlinking rule references to
+% rule definitions.  The links will be generated only if the
+% \textsf{hyperref} package is loaded.
+%
+% \begin{decl}
+%   \defmacro{ranchor}\marg{rule-name}
+% \end{decl}
+% Print \meta{rule-name} as a rule name and create a hypertarget with
+% that name.
+%
+% \begin{decl}
+%   \defmacro{rref}$[$|*|$]$|{|\meta{rule-name}$_1$|,|\ldots|,|\meta{rule-name}$_k$|}|
+%   \\
+%   \hline
+%   \defmacro{Rref}$[$|*|$]$|{|\meta{rule-name}$_1$|,|\ldots|,|\meta{rule-name}$_k$|}|
+% \end{decl}
+% Print \meta{rule-name}$_1$ through \meta{rule-name}$_k$ as a nice
+% list, with hyperlinks to the corresponding \usemacro{ranchor}s if
+% \textsf{hyperref} is loaded. For example,
+% \begin{quote}
+%  |\rref{T-Var,T-Abs,T-App}|
+% \end{quote}
+% prints
+% \begin{quote}
+%  \rref{T-Var,T-Abs,T-App}
+% \end{quote}
+% The uppercase variant |\Rref| is for the beginning as a sentence, as
+% it capitalizes the introduction word (``Rule[s]'') by default.  The
+% starred variants |\rref*| and |\Rref*| do not print the introduction
+% word, but merely a bare list of rule references.  The style of the
+% references and text used to introduce them is configurable using
+% by renewing several commands:
+% \begin{decl}
+%   \textbf{command} & \textbf{default value} \\
+%   \hline
+%   \hline
+%   \defmacro{rrefruletext} & |rule| \\
+%   \hline
+%   \defmacro{Rrefruletext} & |\expandafter\MakeUppercase\rrefruletext| %   \\
+%   \hline
+%   \defmacro{rrefrulestext} & |\rrefruletext s| \\
+%   \hline
+%   \defmacro{Rrefrulestext} & |\Rrefruletext s| \\
+%   \hline
+%   \defmacro{ranchorstyle} & |\rrefstyle| \\
+%   \hline
+%   \defmacro{rrefstyle} & |\normalfont\scshape| \\
+%   \hline
+%   \defmacro{wraparoundrref} & |\mbox|
+% \end{decl}
+% Commands |\rrefruletext| and |\Rrefruletext| are used to introduce
+% single rules made by |\rref| and |\Rref|, respectively.
+% Commands |\rrefrulestext| and |\Rrefrulestext| are the plural
+% versions, used to introduce
+% lists rules made by |\rref| and |\Rref|.
+% To change the style of rule anchors and rule references, redefine
+% |\ranchorstyle| and |\rrefstyle|. Finally, |\wraparoundrref| is
+% wrapped around each rule reference to prevent line and page breaks
+% within the rule name, since page breaks can crash \textsf{hyperref}.
+%
+% To redefine how lists are separated (as in ``,'' and ``and''), see the
+% documentation for the \textsf{listproc} package. The relevant commands
+% to redefine are \usemacro{FormatListSepTwo},
+% \usemacro{FormatListSepMore}, and \usemacro{FormatListSepLast}.
+%
+% \subsection{Including Inference Rules}
+%
+% \begin{decl}
+%   \defmacro{drule} \oarg{opt} \marg{rule-name}
+% \end{decl}
+% Include the Ott rule with name \meta{rule-name}.  This translates a
+% name like |T-Var| to the name that Ott uses for the rule,
+% |\|\meta{prefix}|druleTXXVar|.  If the optional argument is given,
+% then that is passed to the Ott rule command; otherwise we pass the
+% empty argument.
+%
+% This macro is primarily intended to be used in the
+% \useenviron{drulepar} environment.  Multiple uses of |\drule| will try to
+% space themselves using |\and|, which will be issued by all but the
+% first rule in a scope.  Thus, a group of rules should appear in a
+% \TeX{} group. To suppress automatic spacing altogether, wrap each rule
+% in its own group.
+% \begin{decl}
+%   |\begin{|\defenviron{drulepar}|}| \oarg{rule-prefix} \marg{judgment} \marg{descr} \\
+%   |  |\meta{math} \\
+%   |\end{drulepar}|
+% \end{decl}
+% Create a block for setting rules.  Argument \meta{judgment} should be
+% in math mode, and will be set as a heading in a framed box on the
+% left.  The description, \meta{descr}, is right aligned in text mode.
+% Then the contents of the environment are set as a math paragraph using
+% \textsf{mathpartir}'s \useenviron{mathparpagebreakable} environment.
+% 
+% If the optional \meta{rule-prefix} is specified, then any uses of
+% |\drule| within the group will have \meta{rule-prefix}|-| prepended to
+% their rule name.
+% \begin{decl}
+%   \defmacro{drules} \oarg{rule-prefix} \marg{judgment} \marg{descr}
+%   |{|\meta{rule-name}$[$|,|$\ldots]$|}|
+% \end{decl}
+% Create a block with the specified rules, which are the comma-separated
+% argument. This is essentially a
+% shortcut for using the \useenviron{drulepar} environment and
+% \usemacro{drule} command.  The above sample syntax is equivalent to
+% \begin{quote}
+%   |\begin{drulepar}| \oarg{rule-prefix} \marg{judgment} \marg{descr} \\
+%   |  \drule|\marg{rule-name} $[\ldots]$ \\
+%   |\end{drulepar}|
+% \end{quote}
+% \begin{decl}
+%   |\begin{|\defenviron{rulesection}|}| \oarg{rule-prefix} \marg{judgment} \marg{descr} \\
+%   |  |\meta{text} \\
+%   |\end{rulesection}|
+% \end{decl}
+% Create a block with \meta{judgment} and \meta{descr} heading, like
+% \useenviron{drulepar}, but the contents of the environment are
+% (initial) in text mode.  Set the optional \meta{rule-prefix} for its
+% duration if specified.
+%
+% \subsubsection{Configuration Macros}
+%
+% These commands are used by the commands above, and may be redefined to
+% change their behavior:
+%
+% \begin{decl}
+%   \defmacro{ottaltinferrule} \marg{rule-name} \marg{infer-opts}
+%               \marg{premises} \marg{conclusion}
+% \end{decl}
+% For setting inference rules, by default this delegates to
+% \textsf{mathpartir}'s \usemacro{inferrule*}.  The \meta{rule-name} is
+% passed to |\inferrule*| using key |lab|, and the remaining options
+% \meta{infer-opts} are passed as is.
+% This command may be
+% redefined in order to set inference rules with different options or to
+% use a different mechanism than |\inferrule*|.
+% \begin{decl}
+%   \defmacro{drulesectionhead} \marg{judgment} \marg{descr}
+% \end{decl}
+% This command is used to set the heading for the \useenviron{drulepar}
+% and \useenviron{rulesection} environments. Argument \meta{judgment} is
+% the judgment to set in math mode in a box, and \meta{descr} is the
+% judgment description to set in text mode.
+%
+% \subsection{Including Grammars}
+%
+% \begin{decl}
+%   |\begin{|\defenviron{ottaltgrammar}|}| \oarg{dimen} \\
+%   |  |\defmacro{nt} \marg{nonterm-name} \\
+%   |  |\ldots \\
+%   |\end{ottaltgrammar}|
+% \end{decl}
+% Build an Ott grammar. The optional argument \meta{dimen} specifies the
+% default vertical spacing between grammar items.  Within the grammar,
+% the command |\nt| is defined, which takes an Ott nonterminal name and
+% adds its productions to the grammar.
+% \begin{decl}
+%   \defmacro{nonterms} \oarg{dimen}
+%       |{|\meta{nonterm-name}$[$|,|$\ldots]$|}|
+% \end{decl}
+% This is a convenience macro for typesetting a grammar with the
+% specified nonterminals. It's easily defined in terms of the
+% \useenviron{ottaltgrammar} environment.
+%
+% \subsection{Nonterminal Styling}
+% \subsubsection{Nonterminal Classes}
+% \label{sec:smv}
+%
+% Ott allows specifying the \LaTeX{} code for printing nonterminal
+% symbols. For example, we may use the concrete syntax |G| in Ott for
+% typing contexts, but want it to appear as $\Gamma$ in typeset output.
+% We can do this in Ott by specifying a ``morphism'' after declaring the
+% nonterminal, like this:
+% \begin{verbatim}
+% G {{ tex \Gamma }} :: env_ ::= {{ com typing contexts }}\end{verbatim}
+% I've found this method of specifying how nonterminals should be
+% printed to be difficult to manage in a large Ott development, because
+% it's scattered throughout the Ott source, and because I often want to
+% parameterize how nonterminals are printed, for example, to produce
+% both color and black-and-white versions of the same document.  This
+% package provides a facility for managing nonterminal symbols so
+% that instead, one writes something like
+% \begin{verbatim}
+% G {{ tex \nonterm G }} :: env_ ::= {{ com typing contexts }}\end{verbatim}
+% in the Ott source and then can configure what |\nonterm G| means from
+% the \LaTeX\ side.
+%
+% To do this, we declare an ``NT class'' and then define the meaning of
+% nonterminal symbols within it:
+% \begin{decl}[1ex]
+%   \defmacro{newNTclass} \oarg{mode-if} \marg{class-name}
+% \end{decl}
+% Declare a new nonterminal class named \meta{class-name}.  If
+% \meta{mode-if} is supplied, then it is used as a conditional to choose
+% between regular and alternate styles for the nonterminals, as
+% explained below.  The conditional should take two arguments, and
+% return the first for \emph{true} and the second for \emph{false}.
+% (The default for \meta{mode-if} is
+% \usemacro{ifnotalternateNonterms}, which is set by the
+% \seeoption{alternateNonterms} package option.)
+%
+% This command results in the definition of three new commands:
+% \begin{quotation}
+%   \begin{decl}[1ex]
+%      |\new|\meta{class-name} \oarg{style} \marg{nt-name} \marg{defn}
+%   \end{decl}
+%   Declare nonterminal name \meta{nt-name} to be printed as
+%   \meta{style}|{|\meta{defn}|}| in the regular case (when
+%   \meta{mode-if} is true) and \meta{defn} in
+%   the alternate case (when \meta{mode-if} is false).
+%   \begin{decl}
+%      |\new|\meta{class-name}|s| \oarg{style} \marg{nt-name} \marg{defn}
+%                                 \marg{alt-defn}
+%   \end{decl}
+%   Declare nonterminal name \meta{nt-name} to be printed as
+%   \meta{style}|{|\meta{defn}|}| in the regular case (when
+%   \meta{mode-if} is true) and \meta{alt-defn} in
+%   the alternate case (when \meta{mode-if} is false).
+%   \begin{decl}
+%      |\|\meta{class-name} \marg{nt-name}
+%   \end{decl}
+%      Print nonterminal \meta{nt-name}.
+% \end{quotation}
+% Note that the mode selector \meta{mode-if} takes effect when
+% nonterminals are declared, not when they are used.
+%
+% \begin{decl}
+%   \defmacro{ifnotalternateNonterms} \marg{regular} \marg{alternate}
+% \end{decl}
+% Select between regular and alternate presentations.  By default, this
+% is defined to return \meta{regular}, but if the
+% \seeoption{alternateNonterms} package option is given when loading the
+% package, then it returns \meta{alternate} instead. This is used by
+% |\newNTclass| as the mode selector if none is explicitly supplied.
+%
+% \begin{decl}
+%   \defmacro{@ifToif} \marg{LaTeX-style-if} \\
+%   \hline
+%   \defmacro{ifTo@if} \marg{TeX-style-if}
+% \end{decl}
+% Convert between \TeX-style conditional, which expects to see |\else|
+% (optionally) and |\fi|, and \LaTeX-style conditional, which takes two
+% arguments.  For example, we can convert the \TeX-style |\ifnum\dim<5|
+% to \LaTeX-style and give it two arguments, like so:
+% \begin{quote}
+% |\ifTo@if {\ifnum\dim<5}| \marg{then-text} \marg{else-text}
+% \end{quote}
+% Or, we can convert \LaTeX-style |\@ifundefined{somecs}| to \TeX-style:
+% \begin{quote}
+% |\@ifToif| |{\@undefined{somecs}}| \meta{then-text}|\else| \meta{else-text}|\fi|
+% \end{quote}
+% The former is useful to convert a \TeX-style conditional declared with
+% \usemacro{newif} for passing to \usemacro{newNTclass}.  Here's an
+% example. We begin by declaring a new \TeX\ conditional, which we'll
+% use to switch color on and off:
+% \begin{quote}
+% |\newif\ifcolor \ifcolortrue|
+% \end{quote}
+% Later, we declare an nonterminal class for ``calculus A'', whose
+% presentation mode is controlled by |\ifcolor|:
+% \begin{quote}
+% |\newNTclass[\ifTo@if\ifcolor]{calcA}|
+% \end{quote}
+% Then we can add nonterminal symbols to calculus A. For example, we
+% declare a nonterminal named |t|, which
+% prints as $\color{teal}\tau$ when |\ifcolor| was true when it was
+% declared
+% and as $\tau$ when |\ifcolor| was false:
+% \begin{quote}
+% |\newcalcA[\textcolor{teal}] t \tau|
+% \end{quote}
+%
+% \subsubsection{Subscript-and-Prime Helpers}
+%
+% Ott allows writing nonterminals and metavariables followed by digits
+% and apostrophes to produce numeric subscripts and primes.  For
+% example, if |t| is set to print $\tau$, then |t12'| prints
+% $\tau_{12}'$.  However, if we style $\tau$, it will not automatically
+% style the subscripts and primes as well.  For example, if we give a
+% declare |t| as above to be |\calcA t|, which expands to
+% |\textcolor{teal}{\tau}|, then |t12'| prints as
+% $\textcolor{teal}\tau_{12}'$, which is unsatisfactory.
+%
+% In this section, we describe commands that capture subscripts and
+% primes that follow a nonterminal symbol so that we can style them
+% along with the nonterminal.
+% For example, you could define |\calcA t| as
+% \begin{quote}
+% |\newcalcA[\NTCAPTURE{\textcolor{teal}}] t \tau|,
+% \end{quote}
+% and then |t12'| appears as
+% $\NTCAPTURE{\textcolor{teal}}\tau_{12}'$.
+%
+% \begin{decl}
+%   \defmacro{NTCAPTURE} \marg{style} \marg{text} \meta{capture-seq}
+% \end{decl}
+% \begin{doctabular}{ccl}
+%   where \meta{capture-seq} & $::=$ & \meta{empty} \\
+%                     & $\vert$ & |_|\marg{subscript} \meta{capture-seq} \\
+%                     & $\vert$ & |'| \meta{capture-seq} \\
+% \end{doctabular} \\
+% Style \meta{text} and any immediately following \meta{subscript}s and
+% |'|s (primes) using \meta{style}.  That is, it expands to
+% \begin{quote}
+% \meta{style}|{|\meta{text}\meta{capture-seq}|}|
+% \end{quote}
+%
+% \begin{decl}
+%   \defmacro{NTCAPTURELOW} \marg{styler} \marg{text} \meta{capture-seq}
+% \end{decl}
+% Like |\NTCAPTURE|, it captures subscripts and primes following
+% \marg{text}, but it passes the \meta{text}, primes, and subscripts to
+% \meta{styler} as separate arguments, like this:
+% \begin{quote}
+%   \meta{styler} \marg{text} |{|\meta{subscript}$\ldots$|}|
+%                             |{'|$\ldots$|}|
+% \end{quote}
+% This lets \meta{styler} have individual control over how each part is
+% styled.
+%
+% \begin{decl}
+%   \textbf{Usage} & \textbf{Definition} \\
+%   \hline
+%   \defmacro{NTOVERLINE} \marg{text} \meta{capture-seq}
+%   & |\NTCAPTURE\overline|
+%   \\
+%   \hline
+%   \defmacro{NTUNDERLINE} \marg{text} \meta{capture-seq}
+%   & |\NTCAPTURE\underline|
+%   \\
+%   \hline
+%   \defmacro{NTTEXTCOLOR} \marg{color} \marg{text} \meta{capture-seq}
+%   & |\NTCAPTURE{\textcolor|\marg{color}|}|
+% \end{decl}
+% Convenience macros that serve as example uses of |\NTCAPTURE| for
+% overlined, underlined, and colored nonterminals.
+%
+% \StopEventually{
+%   \PrintChanges
+%   \setcounter{IndexColumns}{2}
+%   \clearpage
+%   \PrintIndex
+% }
+%
+% \section{Implementation}
+% We begin by loading several packages:
+%    \begin{macrocode}
+%<*package>
+\RequirePackage{mathpartir}
+\RequirePackage{ifthen}
+\RequirePackage{keyval}
+\RequirePackage{listproc}
+%    \end{macrocode}
+% \subsection{Loading \& Options}
+% There are five package options. The first three determine the line
+% break behavior between inference rule premises. The fourth turns
+% on alternate presentation of nonterminal symbols using the NT class
+% system, and the fifth uses the \textsf{supertabular} package for
+% grammars.
+%    \begin{macrocode}
+\DeclareOption{implicitPremiseBreaks}{
+  \renewcommand\ottaltpremisesep{\\}
+  \renewcommand\ottaltpremisebreak{\\}
+}
+\DeclareOption{lineBreakHack}{
+  \renewcommand\ottaltpremisesep{\and}
+  \renewcommand\ottaltpremisebreak{\\\\}
+}
+\DeclareOption{implicitLineBreakHack}{
+  \renewcommand\ottaltpremisesep{\\}
+  \renewcommand\ottaltpremisebreak{\\\\}
+}
+\DeclareOption{alternateNonterms}{
+  \let\ifnotalternateNonterms\@secondoftwo
+}
+\DeclareOption{supertabular}{
+  \ottalt@supertabulartrue
+}
+%    \end{macrocode}
+% \begin{macros}{ottaltpremisesep,ottaltpremisebreak,ifnotalternateNonterms}
+% We set the default values for the options (automatic line breaks,
+% ignoring the line break hack, and not in alternate NT mode), and then
+% process the actual options.
+%    \begin{macrocode}
+\newcommand\ottaltpremisesep{\\}
+\newcommand\ottaltpremisebreak{\\}
+\let\ifnotalternateNonterms\@firstoftwo
+\newif\ifottalt@supertabular
+\ProcessOptions
+%    \end{macrocode}
+% Load the \textsf{supertabular} package if requested.
+%    \begin{macrocode}
+\ifottalt@supertabular
+  \RequirePackage{supertabular}
+\fi
+%    \end{macrocode}
+% \end{macros}
+% \subsubsection{Renewing Ott Commands}
+% \label{sec:impl-renew}
+% \begin{macros}{inputott,renewottcommands}
+% |\inputott| inputs the file named by its argument and then calls
+% |\renewottcommands|, which redefines several commands that are
+% originally defined in the code generated by Ott.
+%    \begin{macrocode}
+\newcommand\inputott[2][ott]{
+  \input{#2}
+  \renewottcommands[#1]
+}
+\newcommand\renewottcommands[1][ott]{
+%    \end{macrocode}
+% \begin{macros}{renewottcomm@nd}
+% Helper macro for redefining Ott commands using the supplied prefix
+% |#1|:
+%    \begin{macrocode}
+  \def\renewottcomm@nd##1{
+    \expandafter\renewcommand\csname #1##1\endcsname
+  }
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottdrule,ottalt@nextpremise}
+% This command cooperates with the next one, |\ottpremise|, to print
+% with the proper line breaking premises.
+% It does two things to set up evaluating the premises: it clears a
+% token register in which premises will accumulator, and defines
+% |\ottalt@nextpremise| to do nothing.  The latter will be added to the
+% token register before the next premise, so it's used by each premise
+% to communicate to the next one what to place between then to produce
+% spacing or a line break.
+%
+% Each call to |\ottpremise| will add itself to the token register.  Then
+% |\ottdrule| passes the token register to |\inferrule*| to use as the
+% premise(s) of the rule.
+%    \begin{macrocode}
+  \renewottcomm@nd{drule}[4][]{
+    \def\ottalt@nextpremise{}
+    \ottalt@premisetoks={ }
+    ##2
+    \expandafter\ottalt@inferrule\expandafter
+      {\the\ottalt@premisetoks}{##3}{##4}{##1}
+  }
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottpremise}
+% This is the command that Ott wraps each inference rule premise with,
+% so we redefine it to add each premise to the token register.  It
+% checks whether its contents end with \usemacro{\ottlinebreakhack}, in
+% which case it sets |\ottalt@nextpremise| to produce a line break
+% before the next premise (if line-break-hack--mode is on).
+%    \begin{macrocode}
+  \renewottcomm@nd{premise}[1]{%
+    \ottalt@premisetoks=
+        \expandafter\expandafter\expandafter
+                {\expandafter\the\expandafter\ottalt@premisetoks
+                 \ottalt@nextpremise##1}
+    \ottalt@iflinebreakhack##1\ottlinebreakhack\ottalt@iflinebreakhack{
+      \let\ottalt@nextpremise\ottaltpremisebreak
+    }{
+      \let\ottalt@nextpremise\ottaltpremisesep
+    }
+  }
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottusedrule}
+% We redefine |\ottusedrule| to automatically insert \usemacro{and} between
+% rules.  We assume that for the first rule in the group,
+% \usemacro{ifottalt@firstrule} will be true, and we change it to false
+% for subsequent rules.
+% This works provided each sequence of rules is in the same \TeX\ group,
+% because we set \ottalt@firstrulefalse locally.
+%    \begin{macrocode}
+  \renewottcomm@nd{usedrule}[1]{%
+    \ifottalt@firstrule
+      \ottalt@firstrulefalse
+    \else
+      \and
+    \fi
+    \ensuremath{##1}
+  }
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottdefnblock}
+% Ott uses this command for enclosing all the rules in a judgment.  We
+% delegate to \useenviron{drulepar}, which is defined in
+% \S\ref{sec:rules-impl}.
+%    \begin{macrocode}
+  \renewenvironment{#1defnblock}[3][]
+    {\begin{drulepar}{##2}{##3}}
+    {\end{drulepar}}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottdrulename}
+% To print rule names, we replace underscore with hyphen and turn
+% the rule name into a rule anchor:
+%    \begin{macrocode}
+  \renewottcomm@nd{drulename}[1]{%
+    \ottalt@replace@cs\ranchor\_-{}##1\\
+  }
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottprodline,ottprodnewline}
+% For each production line in a grammar, we
+% test for M and S rules and don't print them.
+% Because we add newlines in the |\ottprodline|, we make
+% |\ottprodnewline| do nothing.
+%    \begin{macrocode}
+  \renewottcomm@nd{prodline}[6]{
+    \ifthenelse{\equal{##3}{}}{
+      \\ & & $##1$ & $##2$ & & $##5$ & $##6$
+    }{}
+  }
+  \renewottcomm@nd{prodnewline}{\relax}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottgrammartabular}
+% This is the command that Ott uses for grammars.
+%    \begin{macrocode}
+  \renewottcomm@nd{grammartabular}[1]{%
+    \begin{ottaltgrammar}##1\end{ottaltgrammar}%
+  }
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{drule@h@lper,nonterm@h@lper}
+% These two macros are not Ott commands that we are redefining, but
+% helper macros that need to know the prefix passed to
+% |\renewottcommands| as |#1|.
+%
+% |\drule@h@lper| is used to print an Ott inference rule by name. It
+% takes three arguments: an ``optional'' argument to
+% pass to the defined rule macro (which likely does nothing), the full,
+% printable name of the rule (for error messages, in case the rule isn't
+% found), and the encoded name that should be used to actually look up
+% the rule.
+%    \begin{macrocode}
+  % #1->optional arg; #2->full, printable rule name;
+  % #3->full macro name for rule
+  \newcommand*\drule@h@lper[3]{%
+    \expandafter\ifx\csname #1drule##3\endcsname\relax
+      \PackageWarning{ottalt}{Unknown ott rule: ##3}%
+      \mbox{\bf(##2?)}%
+    \else
+      \csname #1usedrule\endcsname{\csname #1drule##3\endcsname{##1}}%
+    \fi
+  }
+%    \end{macrocode}
+% The name of an Ott-defined nonterminal is just the prefix name
+% concatenated with the nonterminal name:
+%    \begin{macrocode}
+  \newcommand*\nonterm@h@lper[1]{\csname #1##1\endcsname}
+%    \end{macrocode}
+% \end{macros}
+%    \begin{macrocode}
+}
+%    \end{macrocode}
+% \end{macros}
+% \subsection{Rule References}
+% \begin{macros}{rrefruletext,Rrefruletext,rrefrulestext,Rrefrulestext}
+% \changes{v0.3}{2011/04/01}{
+%   Bugfix: was {\tt RULEs}; now {\tt Rules}.
+% }
+% \begin{macros}{rrefstyle,ranchorstyle,wraparoundrref}
+% These commands are for formatting rule references.  Redefine these to
+% change how rule references appear.
+%    \begin{macrocode}
+\newcommand\rrefruletext{rule}
+\newcommand\Rrefruletext{\expandafter\MakeUppercase\rrefruletext}
+\newcommand\rrefrulestext{\rrefruletext s}
+\newcommand\Rrefrulestext{\Rrefruletext s}
+\newcommand\rrefstyle{\normalfont\scshape}
+\newcommand\ranchorstyle{\rrefstyle}
+\newcommand\wraparoundrref{\mbox}
+%    \end{macrocode}
+% \end{macros}
+% \end{macros}
+% \begin{macros}{rref,rref*,Rref,Rref*}
+% These dispatch between the star and starless variants:
+%    \begin{macrocode}
+\newcommand*\rref{%
+  \@ifnextchar*
+    {\rref@star}
+    {\rref@with\rrefruletext\rrefrulestext}}
+\newcommand*\Rref{%
+  \@ifnextchar*
+    {\rref@star}
+    {\rref@with\Rrefruletext\Rrefrulestext}}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{rref@with,rref@start,@one@rref@nohyper,@ranchor@nhyper}
+% The first two of these produce rule references, using
+% \usemacro{FormatList} (from package \textsf{listproc}), either passing
+% an intro word (for the non-star variant) or no intro word (for the
+% star variants). The last two commands format rule references and
+% anchors without hyperlinks.
+%    \begin{macrocode}
+\newcommand*\rref@with[2]{\FormatList{#1~}{#2~}{\one@rref}}
+\newcommand*\rref@star[1]{\FormatList{}{}{\one@rref}}
+\newcommand*\@one@rref@nohyper[1]{\wraparoundrref{{\rrefstyle{#1}}}}
+\newcommand*\@ranchor@nohyper[1]{{\ranchorstyle{#1}}}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{one@rref,ranchor}
+% We try to detect the \textsf{hyperref} package, and define the rule
+% reference macros to create hyperlinks if it's loaded.  Rather than
+% do the detection now, we wait until the end of the preamble, so that
+% it doesn't matter in what order the packages are loaded.
+%    \begin{macrocode}
+\AtBeginDocument{
+  \ifcsname hypertarget\endcsname
+    \newcommand*\one@rref[1]{%
+      \hyperlink{ottalt:rule:#1}{\@one@rref@nohyper{#1}}%
+    }
+    \newcommand*\ranchor[1]{%
+      \hypertarget{ottalt:rule:#1}{\@ranchor@nohyper{#1}}%
+    }
+  \else
+    \newcommand\one@rref{\@one@rref@nohyper}
+    \newcommand\ranchor{\@ranchor@nohyper}
+  \fi
+}
+%    \end{macrocode}
+% \end{macros}
+%
+% \subsection{Including Inference Rules and Grammars}
+% \label{sec:rules-impl}
+%
+% \begin{macros}{drules}
+% Create a \useenviron{drulepar} and iterate through the requested rules,
+% adding each one.
+%    \begin{macrocode}
+\newcommand*{\drules}[4][\relax]{%
+  \begin{drulepar}[#1]{#2}{#3}
+    \@for\@ottalt@each:=#4\do{%
+      \expandafter\drule\expandafter{\@ottalt@each}
+    }
+  \end{drulepar}%
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{environment}{drulepar}
+% A rule paragraph is merely a math paragraph wrapped in a rule section:
+%    \begin{macrocode}
+\newenvironment{drulepar}[3][\relax]
+  {\begin{rulesection}[#1]{#2}{#3}%
+   \begin{mathparpagebreakable}}
+  {\end{mathparpagebreakable}%
+   \end{rulesection}}
+%    \end{macrocode}
+% \end{environment}
+% \begin{environment}{rulesection}
+% \begin{macros}{ottalt@rulesection@prefix,drulesectionhead}
+% A rule section is set as a one-item \usemacro{trivlist}, with the
+% heading set by \usemacro{drulesectionhead}.  If the optional argument
+% is given, then we save it in \usemacro{ottalt@rulesection@prefix}, so
+% that \usemacro{drule} can add the prefix to each rule name.
+% Initially, the rule section prefix is empty.
+%    \begin{macrocode}
+\newenvironment{rulesection}[3][\relax]
+  {\trivlist\item
+   \ifx#1\relax\else\def\ottalt@rulesection@prefix{#1-}\fi
+   \drulesectionhead{#2}{#3}%
+   \noindent}
+  {\endtrivlist}
+\newcommand\ottalt@rulesection@prefix{}
+\newcommand*{\drulesectionhead}[2]{%
+  \fbox{#1}%
+  \hfill\emph{(#2)}%
+  \par
+}
+%    \end{macrocode}
+% \end{macros}
+% \end{environment}
+% \begin{macros}{drule,drule@helper}
+% To include a rule by name.  Turns |-| into |XX|, since that's how the
+% rule names become defined as macros.  We call
+% \usemacro{drule@h@elper}, which is defined by
+% \usemacro{renewottcommands} to refer to the correct Ott prefix.
+%    \begin{macrocode}
+\newcommand*\drule[2][]{%
+  \expandafter\drule@helper\expandafter{\ottalt@rulesection@prefix}{#1}{#2}%
+}
+\newcommand*\drule@helper[3]{%
+  \ottalt@replace@cs{\drule@h@lper{#2}{#1#3}}-{XX}{}#1#3\\
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottaltinferrule,ottalt@inferrule}
+% Here we define several commands that help with typesetting rules. We
+% begin with the final macro for typesetting rules. Redefine this to
+% set inference rules differently.  It is called by |\ottalt@inferrule|,
+% which reorders its arguments from a useful order from the perspective
+% of \usemacro{ottdrule} to the natural order for |\ottaltinferrule|.
+%    \begin{macrocode}
+\newcommand\ottaltinferrule[4]{
+  \inferrule*[narrower=0.3,lab=#1,#2]
+    {#3}
+    {#4}
+}
+\newcommand\ottalt@inferrule[4]{
+  \ottaltinferrule{#3}{#4}{#1}{#2}
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ifottalt@firstrule,ottalt@nextpremise,ottalt@premisetoks,ottlinebreakhack,ottalt@iflinebreakhack}
+% These are used when dealing with rule premises to maintain rule
+% spacing and eal with the line break hack.
+% Several of these are defined here but used by
+% \usemacro{ottdrule}, which is redefined by
+% \usemacro{renewottcommands}.
+%    \begin{macrocode}
+\newif\ifottalt@firstrule \ottalt@firstruletrue
+\newcommand{\ottalt@nextpremise}{\relax}
+\newtoks\ottalt@premisetoks
+\newcommand{\ottlinebreakhack}{\relax}
+\def\ottalt@iflinebreakhack#1\ottlinebreakhack #2\ottalt@iflinebreakhack{%
+  \ifthenelse{\equal{#2}{}}\@secondoftwo\@firstoftwo
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{ottalt@replace@cs}
+% This helper macro is used to search for a control sequence in a list
+% of tokens and replace it with a given list of tokens.  The usage is:
+% \begin{quote}
+%   \defmacro{ottalt@replace@cs}\marg{next}\marg{needle}\marg{replacement}|{}|\meta{haystack}|\\|
+% \end{quote}
+% This replaces \meta{needle} with \meta{replacement} in \meta{haystack}
+% and passes the result to \meta{next}. It is important that
+% \meta{needle} be a single token, and that \meta{haystack} \emph{not}
+% be wrapped in curly braces.  The extra curly braces before
+% \meta{haystack} and the double backslash after are necessary as well.
+%    \begin{macrocode}
+\newcommand\ottalt@replace@cs[5]{%
+  \ifx\\#5\relax
+    \def\ottalt@replace@cs@kont{#1{#4}}%
+  \else
+    \ifx#2#5\relax
+      \def\ottalt@replace@cs@kont{\ottalt@replace@cs{#1}{#2}{#3}{#4#3}}%
+    \else
+      \def\ottalt@replace@cs@kont{\ottalt@replace@cs{#1}{#2}{#3}{#4#5}}%
+    \fi
+  \fi
+  \ottalt@replace@cs@kont
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{nonterms}
+% To print a grammar, we use the \useenviron{ottaltgrammar} environment
+% defined right after this, and iterate through the requested
+% nonterminal symbols, calling \usemacro{nt} with each.
+%    \begin{macrocode}
+\newcommand*\nonterms[2][8pt]{
+  \begin{ottaltgrammar}[#1]
+    \@for\@ottalt@each:=#2\do{%
+      \expandafter\nt\expandafter{\@ottalt@each}
+    }
+  \end{ottaltgrammar}
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{environment}{ottaltgrammar}
+% \begin{macros}{nt,ottaltintertext}
+% \changes{v0.5}{2011/04/04}{Added command for inserting unaligned text
+% within a grammar}
+% The |ottaltgrammar| environment sets up the table for printing
+% grammars.  It defines the |\nt| macro, which adds the grammar for a
+% named nonterminal, for the extent of the environment.
+%    \begin{macrocode}
+\newenvironment{ottaltgrammar}[1][8pt]{%
+  \begingroup
+  \trivlist\item
+%    \end{macrocode}
+% We use a trick here to make |\nt| automatically insert a newline
+% before all but the first nonterminal in a grammar. We define
+% |\OTTALTNEWLINE| to insert a newline, but then right before the body
+% of the environment starts, inside the \useenviron{supertabular}
+% environment, we redefine |\OTTALTNEWLINE| to do nothing.  Because
+% |supertabular| places each table cell in a group, the no-op
+% redefinition prevents the first but not subsequent nonterminals from
+% inserting a line break.
+%    \begin{macrocode}
+  \def\OTTALTNEWLINE{\\[#1]}%
+  \def\nt##1{\OTTALTNEWLINE\relax\nonterm@h@lper{##1}\ignorespaces}%
+  \newcommand\ottaltintertext[2]{%
+    \multicolumn{8}{l}{%
+      \begin{minipage}{##1}%
+        ##2%
+      \end{minipage}%
+    }%
+  }%
+  \ifottalt@supertabular
+    \begin{supertabular}{llcllllll}
+  \else
+    \begin{tabular}{llcllllll}
+  \fi
+  \let\OTTALTNEWLINE\relax
+  \ignorespaces
+}
+{%
+  \ottafterlastrule
+  \ifottalt@supertabular
+    \end{supertabular}
+  \else
+    \end{tabular}
+  \fi
+  \endtrivlist
+  \endgroup
+  \ignorespaces
+}
+%    \end{macrocode}
+% \end{macros}
+% \end{environment}
+% \subsection{Nonterminal Styling}
+% \begin{macros}{newNTclass}
+% This command defines three new commands with names based on its second
+% argument.  The |\new#2s| command uses the first argument to decide how
+% to print nonterminals that are defined with it.
+%    \begin{macrocode}
+\newcommand\newNTclass[2][\ifnotalternateNonterms]{
+  \expandafter\newcommand\csname new#2s\endcsname[4][]{
+    #1{
+      \expandafter\newcommand\csname ottalt@NT@#2@##2\endcsname{##1{##3}}
+    }{
+      \expandafter\newcommand\csname ottalt@NT@#2@##2\endcsname{##4}
+    }
+  }
+  \expandafter\newcommand\csname new#2\endcsname[3][]{
+    \csname new#2s\endcsname[##1]{##2}{##3}{##3}
+  }
+  \expandafter\newcommand\csname #2\endcsname[1]{%
+    \csname ottalt@NT@#2@##1\endcsname
+  }
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{@ifToif,ifTo@if}
+% Commands for converting between two styles of conditionals.
+%    \begin{macrocode}
+\providecommand\@ifToif[1]{%
+  #1\iftrue\iffalse
+}
+\providecommand\ifTo@if[1]{%
+  #1%
+    \expandafter\@firstoftwo
+  \else
+    \expandafter\@secondoftwo
+  \fi
+}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{NTOVERLINE,NTUNDERLINE,NTTEXTCOLOR}
+% Some sample non-terminal stylers:
+%    \begin{macrocode}
+\newcommand\NTOVERLINE{\NTCAPTURE\overline}
+\newcommand\NTUNDERLINE{\NTCAPTURE\underline}
+\newcommand\NTTEXTCOLOR[1]{\NTCAPTURE{\textcolor{#1}}}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{NTCAPTURE,NTCAPTURELOW,NTCAPTURE@FINISH}
+% These are the commands for capturing subscripts and primes following a
+% nonterminal.  We define |\NTCAPTURE| by passing the helper
+% |\NTCAPTURE@FINISH| to |\NTCAPTURELOW|, and it composes the
+% nonterminal, subscript, and primes in the usual way.
+% Then |\NTCAPTURELOW| uses |\NT@CAPTURE@LOOP| to do the work of
+% gathering subscripts and primes.
+%    \begin{macrocode}
+\newcommand\NTCAPTURE[1]{\NTCAPTURELOW{\NTCAPTURE@FINISH{#1}}}
+\newcommand\NTCAPTURE@FINISH[4]{#1{#2_{#3}#4}}
+\newcommand\NTCAPTURELOW[2]{\NT@CAPTURE@LOOP{#1}{#2}\relax\relax}
+%    \end{macrocode}
+% \end{macros}
+% \begin{macros}{NT@CAPTURE@LOOP,NT@CAPTURE@SUB,NT@CAPTURE@PRIME}
+%
+% This is the main loop for the nonterminal capture macros.
+% The arguments are:
+% \begin{description}
+%  \item[\tt\#1] The operator to apply to the |#2|--|#4| when done
+%  \item[\tt\#2] Hold the main nonterminal throughout the loop
+%  \item[\tt\#3] Accumulates subscripts
+%  \item[\tt\#4] Accumulates primes
+% \end{description}
+% The main loop checks whether the next character is an underscore or
+% apostrophe, and if so, dispatches to either |\NT@CAPTURE@SUB| or
+% |\NT@CAPTURE@PRIME| to grab it and loop again. If the next character
+% is neither, then it finally calls |#1| with the nonterminal and the
+% accumulated arguments.
+%    \begin{macrocode}
+\newcommand\NT@CAPTURE@LOOP[4]{%
+  \@ifnextchar _{%
+    \NT@CAPTURE@SUB{#1}{#2}{#3}{#4}%
+  }{\@ifnextchar '{%
+    \NT@CAPTURE@PRIME{#1}{#2}{#3}{#4}%
+  }{%
+    {#1{#2}{#3}{#4}}%
+  }}%
+}
+\def\NT@CAPTURE@SUB#1#2#3#4_#5{\NT@CAPTURE@LOOP{#1}{#2}{#3#5}{#4}}
+\def\NT@CAPTURE@PRIME#1#2#3#4'{\NT@CAPTURE@LOOP{#1}{#2}{#3}{#4'}}
+%</package>
+%    \end{macrocode}
+% \end{macros}
+%
+% \appendix
+% \section{Sample Ott \texttt{Makefile}}
+% \label{sec:makefile}
+%
+% This \texttt{Makefile} has rules suitable for a workflow integrating Ott
+% and \LaTeX. It should be available in the file \texttt{Makefile.sample}.
+%
+% From an Ott file \meta{stem}|.ott|, |make |\meta{stem}|.ott.tex| will
+% generate an includable \LaTeX{} file contain definitions of macros for
+% typesetting the grammars and rules in \meta{stem}|.ott|.
+% Given some other \LaTeX{} file \meta{stem}|.tex| that wants to use Ott
+% for preprocessing, |make |\meta{stem}|.mng.tex| will filter the file
+% through Ott.
+% 
+% By default, Ott does not stop on all parse errors in filter mode,
+% but emits \LaTeX{}
+% code that may result in errors later when compiling the \LaTeX{} file.
+% The rule for running Ott as a filter attempts to detect such errors,
+% issue an error message, and halt (unless the environment variable
+% |$DONTSTOP| is set).
+%    \begin{macrocode}
+%<*makefile>
+ OTT             = ott $(OTTFLAGS)
+ OTTFLAGS        = -signal_parse_errors true \
+                   -tex_wrap false -tex_show_meta false
+ 
+ %.ottdump: %.ott
+         $(OTT) -picky_multiple_parses true -i $< -writesys $@
+ 
+ %.ott.tex: %.ottdump
+         $(OTT) -readsys $< -o $@
+ 
+ %.mng.tex: %.tex %.ottdump
+         $(OTT) -readsys $*.ottdump -tex_filter $< $@
+         @if grep '<< no parses (' $@ >/dev/null 2>&1 && \
+               [ -z "$(DONTSTOP)" ]; then \
+                 echo; \
+                 echo "***** OTT PARSE ERROR(S) *****"; \
+                 grep -n '<< no parses (' $@; \
+                 $(RM) $@; \
+                 exit 1; \
+         fi >&2
+%</makefile>
+%    \end{macrocode}
+%
+% \section{Additional Ott Code}
+%
+% This is additional Ott code that is used to produce the Ott examples
+% in \S\ref{sec:intro}.
+%
+%    \begin{macrocode}
+%<*ott>
+grammar
+metavar x {{ tex \nonterm x }} ::= {{ com variables }}
+metavar a {{ tex \nonterm a }} ::= {{ com type variables }}
+
+grammar
+formula :: formula_ ::= {{ com formulas from meta-language }}
+  | judgement    :: :: judegment
+  | formula \\\\ :: :: lbh {{ tex [[formula]] \ottlinebreakhack }}
+  | x : t in G   :: :: xinenv
+  | a in G       :: :: ainenv
+  | G |- t ok    :: :: tokay
+
+terminals :: terminals_ ::=
+  | ->           :: :: arr       {{ tex \to }}
+  | all          :: :: all       {{ tex \forall }}
+  | \            :: :: lam       {{ tex \lambda }}
+  | /\           :: :: Lam       {{ tex \Lambda }}
+  | in           :: :: in        {{ tex \in }}
+  | |-           :: :: proves    {{ tex \vdash }}
+  | empty        :: :: empty     {{ tex \bullet }}
+%</ott>
+%    \end{macrocode}
+%
+% \Finale
+%
+\endinput
