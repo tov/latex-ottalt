@@ -1,0 +1,26 @@
+The ottalt Package
+
+To build the PDF documentation and style file, merely run
+
+    % make
+
+If you don't have make, it's possible to do it manually.  To create the
+style file (ottalt.sty) and the documentation (ottalt.pdf), run the
+following sequence of commands:
+
+    latex ottalt.ins
+    latex ottalt.dtx
+    makeindex -s gind.ist ottalt.idx
+    makeindex -s gglo.ist -o ottalt.gls ottalt.glo
+    latex ottalt.dtx
+    pdflatex ottalt.dtx
+
+If you only want to build the style file, and not the documentation,
+only the first command (latex ottalt.ins) is necessary.
+
+The documentation is also available on the web at
+http://www.ccs.neu.edu/home/tov/code/latex/
+
+Jesse A. Tov
+tov@ccs.neu.edu
+Fri Jul 29 15:41:15 EDT 2011
