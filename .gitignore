@@ -1,6 +1,9 @@
 ottalt.sty
+listproc.sty
+.*sw?
 *.aux
 *.dvi
+*.idx
 *.glo
 *.gls
 *.hd
@@ -10,3 +13,9 @@ ottalt.sty
 *.out
 *.pdf
 *.toc
+.svn
+ottalt.ott
+ottalt.ott.tex
+ottalt.ottdump
+Makefile.sample
+Makefile.sample.pre

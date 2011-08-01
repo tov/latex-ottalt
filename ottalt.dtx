@@ -22,7 +22,7 @@
 %   *** The package file:
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{ottalt}
-%<package> [2011/04/04 v0.5 alternate Ott layout style]
+%<package> [2011/08/01 v0.6 alternate Ott layout style]
 %
 %   *** The driver file:
 %<driver>\NeedsTeXFormat{LaTeX2e}
@@ -30,13 +30,13 @@
 %   *** date, version, and stuff:
 %\fi
 %\ProvidesFile{ottalt}
-%  [2011/04/04 v0.5 alternate Ott layout style]
+%  [2011/08/01 v0.6 alternate Ott layout style]
 % ^^A   Bugfix: \texttt{Rrefrulestex} was
 % ^^A  |RULEs| by default; now it's |Rules|.
 % \changes{v0.2}{2011/03/30}{Included listproc.sty}
 % \changes{v0.1}{2011/03/25}{Initial documented release}
 %
-% \CheckSum{457}
+% \CheckSum{460}
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -1231,7 +1231,7 @@ G |- e[t] : {t/a}t'
   \ignorespaces
 }
 {%
-  \ottafterlastrule
+  \@ifundefined{ottafterlastrule}{\\}{\ottafterlastrule}%
   \ifottalt@supertabular
     \end{supertabular}
   \else
@@ -1243,6 +1243,10 @@ G |- e[t] : {t/a}t'
 }
 %    \end{macrocode}
 % \end{macros}
+% \changes{v0.6}{2011/08/01}{
+%   Bugfix: no longer assumes that \usemacro{ottafterlastrule}
+%   is already defined.
+% }
 % \end{environment}
 % \subsection{Nonterminal Styling}
 % \begin{macros}{newNTclass}
