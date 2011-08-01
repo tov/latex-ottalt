@@ -22,7 +22,7 @@
 %   *** The package file:
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{ottalt}
-%<package> [2011/08/01 v0.6 alternate Ott layout style]
+%<package> [2011/08/01 v0.7 alternate Ott layout style]
 %
 %   *** The driver file:
 %<driver>\NeedsTeXFormat{LaTeX2e}
@@ -30,7 +30,7 @@
 %   *** date, version, and stuff:
 %\fi
 %\ProvidesFile{ottalt}
-%  [2011/08/01 v0.6 alternate Ott layout style]
+%  [2011/08/01 v0.7 alternate Ott layout style]
 % ^^A   Bugfix: \texttt{Rrefrulestex} was
 % ^^A  |RULEs| by default; now it's |Rules|.
 % \changes{v0.2}{2011/03/30}{Included listproc.sty}
@@ -973,12 +973,16 @@ G |- e[t] : {t/a}t'
   \newcommand*\drule@h@lper[3]{%
     \expandafter\ifx\csname #1drule##3\endcsname\relax
       \PackageWarning{ottalt}{Unknown ott rule: ##3}%
-      \mbox{\bf(##2?)}%
+      \mbox{\textbf{(##2?)}}%
     \else
       \csname #1usedrule\endcsname{\csname #1drule##3\endcsname{##1}}%
     \fi
   }
 %    \end{macrocode}
+% \changes{v0.7}{2011/08/01}{
+%   Using \usemacro{textbf} instead of \usemacro{bf} to select
+%   bold for the unknown rule error message.
+% }
 % The name of an Ott-defined nonterminal is just the prefix name
 % concatenated with the nonterminal name:
 %    \begin{macrocode}
