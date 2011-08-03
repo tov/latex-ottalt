@@ -22,7 +22,7 @@
 %   *** The package file:
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{ottalt}
-%<package> [2011/08/01 v0.7 alternate Ott layout style]
+%<package> [2011/08/03 v0.8 alternate Ott layout style]
 %
 %   *** The driver file:
 %<driver>\NeedsTeXFormat{LaTeX2e}
@@ -30,13 +30,13 @@
 %   *** date, version, and stuff:
 %\fi
 %\ProvidesFile{ottalt}
-%  [2011/08/01 v0.7 alternate Ott layout style]
+%  [2011/08/03 v0.8 alternate Ott layout style]
 % ^^A   Bugfix: \texttt{Rrefrulestex} was
 % ^^A  |RULEs| by default; now it's |Rules|.
 % \changes{v0.2}{2011/03/30}{Included listproc.sty}
 % \changes{v0.1}{2011/03/25}{Initial documented release}
 %
-% \CheckSum{460}
+% \CheckSum{519}
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -521,11 +521,17 @@ G |- e[t] : {t/a}t'
 % \begin{decl}
 %   |\begin{|\defenviron{drulepar}|}| \oarg{rule-prefix} \marg{judgment} \marg{descr} \\
 %   |  |\meta{math} \\
-%   |\end{drulepar}|
+%   |\end{drulepar}| \\
+%   \hline
+%   |\begin{|\defenviron{drulepar*}|}| \oarg{rule-prefix} \marg{judgments} \marg{descr} \\
+%   |  |\meta{math} \\
+%   |\end{drulepar*}|
 % \end{decl}
-% Create a block for setting rules.  Argument \meta{judgment} should be
-% in math mode, and will be set as a heading in a framed box on the
-% left.  The description, \meta{descr}, is right aligned in text mode.
+% Create a block for setting rules.  Argument \meta{judgment}
+% will be set as a heading in a framed box on the
+% left; or for the starred variant, \meta{judgments} should be a
+% comma-separated list, each of which will be set in its own framed box.
+% The description, \meta{descr}, is right aligned in text mode.
 % Then the contents of the environment are set as a math paragraph using
 % \textsf{mathpartir}'s \useenviron{mathparpagebreakable} environment.
 % 
@@ -548,9 +554,14 @@ G |- e[t] : {t/a}t'
 % \begin{decl}
 %   |\begin{|\defenviron{rulesection}|}| \oarg{rule-prefix} \marg{judgment} \marg{descr} \\
 %   |  |\meta{text} \\
-%   |\end{rulesection}|
+%   |\end{rulesection}| \\
+%   \hline
+%   |\begin{|\defenviron{rulesection*}|}| \oarg{rule-prefix} \marg{judgments} \marg{descr} \\
+%   |  |\meta{text} \\
+%   |\end{rulesection*}|
 % \end{decl}
-% Create a block with \meta{judgment} and \meta{descr} heading, like
+% Create a block with \meta{judgment} (or \meta{judgments})
+% and \meta{descr} heading, like
 % \useenviron{drulepar}, but the contents of the environment are
 % (initial) in text mode.  Set the optional \meta{rule-prefix} for its
 % duration if specified.
@@ -559,27 +570,6 @@ G |- e[t] : {t/a}t'
 %
 % These commands are used by the commands above, and may be redefined to
 % change their behavior:
-%
-% \begin{decl}
-%   \defmacro{ottaltinferrule} \marg{rule-name} \marg{infer-opts}
-%               \marg{premises} \marg{conclusion}
-% \end{decl}
-% For setting inference rules, by default this delegates to
-% \textsf{mathpartir}'s \usemacro{inferrule*}.  The \meta{rule-name} is
-% passed to |\inferrule*| using key |lab|, and the remaining options
-% \meta{infer-opts} are passed as is.
-% This command may be
-% redefined in order to set inference rules with different options or to
-% use a different mechanism than |\inferrule*|.
-% \begin{decl}
-%   \defmacro{drulesectionhead} \marg{judgment} \marg{descr}
-% \end{decl}
-% This command is used to set the heading for the \useenviron{drulepar}
-% and \useenviron{rulesection} environments. Argument \meta{judgment} is
-% the judgment to set in math mode in a box, and \meta{descr} is the
-% judgment description to set in text mode.
-%
-% \subsection{Including Grammars}
 %
 % \begin{decl}
 %   |\begin{|\defenviron{ottaltgrammar}|}| \oarg{dimen} \\
@@ -598,6 +588,63 @@ G |- e[t] : {t/a}t'
 % This is a convenience macro for typesetting a grammar with the
 % specified nonterminals. It's easily defined in terms of the
 % \useenviron{ottaltgrammar} environment.
+%
+% \begin{decl}
+%   \defmacro{ottaltinferrule} \marg{rule-name} \marg{infer-opts}
+%               \marg{premises} \marg{conclusion}
+% \end{decl}
+% For setting inference rules, by default this delegates to
+% \textsf{mathpartir}'s \usemacro{inferrule*}.  The \meta{rule-name} is
+% passed to |\inferrule*| using key |lab|, and the remaining options
+% \meta{infer-opts} are passed as is.
+% This command may be
+% redefined in order to set inference rules with different options or to
+% use a different mechanism than |\inferrule*|.
+% \begin{decl}
+%   \defmacro{drulesectionhead} \marg{judgment} \marg{descr} \\
+%   \defmacro{drulesectionhead*} \marg{judgments} \marg{descr}
+% \end{decl}
+% These commands are used to set the heading for the \useenviron{drulepar}
+% and \useenviron{rulesection} environments. Argument \meta{judgment} is
+% the judgment to set in a box on the left, and \meta{descr} is the
+% judgment description to set on the right.  Or, \meta{judgments} is a
+% comma-separated list of judgments, each of which should be set in its
+% own box.
+%
+% \begin{decl}
+%   \textbf{command} & \textbf{default value} \\
+%   \hline
+%   \hline
+%   \defmacro{FormatDruleSectionHead[1]} & |\fbox{#1}| \\
+%   \hline
+%   \defmacro{FormatDruleSectionHeads[1]} & |\fbox{\strut#1}| \\
+%   \hline
+%   \defmacro{FormatDruleSectionHeadRight[1]} & |\emph{(#1)}| \\
+%   \hline
+%   \defmacro{FormatDruleSepTwo}  & |\,,~| \\
+%   \hline
+%   \defmacro{FormatDruleSepMore} & |\FormatDruleSepTwo| \\
+%   \hline
+%   \defmacro{FormatDruleSepLast} & |\FormatDruleSepTwo|
+% \end{decl}
+%
+% These are used to customize the output of \usemacro{drulesectionhead}
+% and \usemacro{drulesectionhead*}, and by extension,
+% the \useenviron{drulepar} and \useenviron{rulesection} environments.
+% \usemacro{FormatDruleSectionHead} and
+% \usemacro{FormatDruleSectionHeads} specify how to format the
+% left-side head (usually the form of a rule) for
+% \usemacro{drulesectionhead} and
+% \usemacro{drulesectionhead*}, respectively; by default, they use a
+% framed box, and the latter adds a \usemacro{strut} so that several
+% boxes have the same height.  \usemacro{FormatDruleSectionHeadRight} is
+% used to format the right-side head (usually a description).
+% \usemacro{FormatDruleSepTwo}, \usemacro{FormatDruleSepMore}, and
+% \usemacro{FormatListSepLast} are used by \usemacro{drulesectionhead*}
+% to separate several left-side heads. \usemacro{FormatDruleSepTwo} is
+% used if there are only two heads to separate. If there are more, then
+% \usemacro{FormatDruleSepMore} is used for all but the last separator,
+% and \usemacro{FormatDruleSepLast} is used between the last two.
 %
 % \subsection{Nonterminal Styling}
 % \subsubsection{Nonterminal Classes}
@@ -1077,6 +1124,7 @@ G |- e[t] : {t/a}t'
 %    \end{macrocode}
 % \end{macros}
 % \begin{environment}{drulepar}
+% \begin{environment}{drulepar*}
 % A rule paragraph is merely a math paragraph wrapped in a rule section:
 %    \begin{macrocode}
 \newenvironment{drulepar}[3][\relax]
@@ -1084,10 +1132,24 @@ G |- e[t] : {t/a}t'
    \begin{mathparpagebreakable}}
   {\end{mathparpagebreakable}%
    \end{rulesection}}
+\newenvironment{drulepar*}[3][\relax]
+  {\begin{rulesection*}[#1]{#2}{#3}%
+   \begin{mathparpagebreakable}}
+  {\end{mathparpagebreakable}%
+   \end{rulesection*}}
 %    \end{macrocode}
+% \changes{v0.8}{2011/08/03}{
+%   Added \useenviron{drulepar*} and \useenviron{rulesection*}
+%   environments and \usemacro{drulesectionhead*} macro.  Each of these
+%   is like its unstarred variant, except that its first non-optional
+%   argument is a comma-separated list of judgment names rather than a
+%   single one, and these are by default set in separate boxes.
+% }
+% \end{environment}
 % \end{environment}
 % \begin{environment}{rulesection}
-% \begin{macros}{ottalt@rulesection@prefix,drulesectionhead}
+% \begin{environment}{rulesection*}
+% \begin{macros}{ottalt@rulesection@prefix,drulesectionhead,drulesectionhead*}
 % A rule section is set as a one-item \usemacro{trivlist}, with the
 % heading set by \usemacro{drulesectionhead}.  If the optional argument
 % is given, then we save it in \usemacro{ottalt@rulesection@prefix}, so
@@ -1100,15 +1162,48 @@ G |- e[t] : {t/a}t'
    \drulesectionhead{#2}{#3}%
    \noindent}
   {\endtrivlist}
+\newenvironment{rulesection*}[3][\relax]
+  {\trivlist\item
+   \ifx#1\relax\else\def\ottalt@rulesection@prefix{#1-}\fi
+   \drulesectionhead*{#2}{#3}%
+   \noindent}
+  {\endtrivlist}
 \newcommand\ottalt@rulesection@prefix{}
-\newcommand*{\drulesectionhead}[2]{%
-  \fbox{#1}%
-  \hfill\emph{(#2)}%
+\newcommand*{\drulesectionhead}{%
+  \@ifnextchar *{\drulesectionheadMany}{\drulesectionheadOne}%
+}
+\newcommand*{\drulesectionheadOne}[2]{%
+  \FormatDruleSectionHead{#1}%
+  \hfill\FormatDruleSectionHeadRight{#2}%
+  \par
+}
+\newcommand*{\drulesectionheadMany}[3]{%
+  {%
+    \let\FormatListSepTwo\FormatDruleSepTwo
+    \let\FormatListSepMore\FormatDruleSepMore
+    \let\FormatListSepLast\FormatDruleSepLast
+    \FormatList{}{}{\FormatDruleSectionHeads}{#2}%
+  }%
+  \hfill\FormatDruleSectionHeadRight{#3}%
   \par
 }
 %    \end{macrocode}
 % \end{macros}
 % \end{environment}
+% \end{environment}
+% \begin{macros}{FormatDruleSepTwo,FormatDruleSepMore,FormatDruleSepLast,FormatDruleSectionHead,FormatDruleSectionHeads,FormatDruleSectionHeadRight}
+% This macros allow customizing the formatting of
+% \usemacro{drulesectionhead} and
+% \usemacro{drulesectionhead*}.
+%    \begin{macrocode}
+\newcommand*\FormatDruleSepTwo{\,,~}
+\newcommand*\FormatDruleSepMore{\FormatDruleSepTwo}
+\newcommand*\FormatDruleSepLast{\FormatDruleSepTwo}
+\newcommand*\FormatDruleSectionHead[1]{\fbox{#1}}
+\newcommand*\FormatDruleSectionHeads[1]{\fbox{\strut#1}}
+\newcommand*\FormatDruleSectionHeadRight[1]{\emph{(#1)}}
+%    \end{macrocode}
+% \end{macros}
 % \begin{macros}{drule,drule@helper}
 % To include a rule by name.  Turns |-| into |XX|, since that's how the
 % rule names become defined as macros.  We call
