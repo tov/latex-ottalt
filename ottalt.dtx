@@ -22,7 +22,7 @@
 %   *** The package file:
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{ottalt}
-%<package> [2011/08/03 v0.9 alternate Ott layout style]
+%<package> [2011/08/07 v0.10 alternate Ott layout style]
 %
 %   *** The driver file:
 %<driver>\NeedsTeXFormat{LaTeX2e}
@@ -30,7 +30,7 @@
 %   *** date, version, and stuff:
 %\fi
 %\ProvidesFile{ottalt}
-%  [2011/08/03 v0.9 alternate Ott layout style]
+%  [2011/08/07 v0.10 alternate Ott layout style]
 % ^^A   Bugfix: \texttt{Rrefrulestex} was
 % ^^A  |RULEs| by default; now it's |Rules|.
 % \changes{v0.2}{2011/03/30}{Included listproc.sty}
@@ -484,7 +484,7 @@ G |- e[t] : {t/a}t'
 %   \hline
 %   \defmacro{rrefstyle} & |\normalfont\scshape| \\
 %   \hline
-%   \defmacro{wraparoundrref} & |\mbox|
+%   \defmacro{wraparoundrref} & |\relax|
 % \end{decl}
 % Commands |\rrefruletext| and |\Rrefruletext| are used to introduce
 % single rules made by |\rref| and |\Rref|, respectively.
@@ -493,8 +493,10 @@ G |- e[t] : {t/a}t'
 % lists rules made by |\rref| and |\Rref|.
 % To change the style of rule anchors and rule references, redefine
 % |\ranchorstyle| and |\rrefstyle|. Finally, |\wraparoundrref| is
-% wrapped around each rule reference to prevent line and page breaks
-% within the rule name, since page breaks can crash \textsf{hyperref}.
+% wrapped around each rule reference, which can be used to prevent line
+% and page breaks within the rule name, among other things. (Older
+% versions of \textsf{hyperref} crash when a link breaks between pages,
+% so to prevent this, use |\renewcommand\wrapparoundrref{\mbox}|.)
 %
 % To redefine how lists are separated (as in ``,'' and ``and''), see the
 % documentation for the \textsf{listproc} package. The relevant commands
@@ -1063,8 +1065,12 @@ G |- e[t] : {t/a}t'
 \newcommand\Rrefrulestext{\Rrefruletext s}
 \newcommand\rrefstyle{\normalfont\scshape}
 \newcommand\ranchorstyle{\rrefstyle}
-\newcommand\wraparoundrref{\mbox}
+\providecommand\wraparoundrref{\relax}
 %    \end{macrocode}
+% \changes{v0.10}{2011/08/07}{
+%   Redefined \usemacro{wraparoundrref} to be |\relax| rather than
+%   |\mbox|, since page breaks no longer crash \textsf{hyperref}.
+% }
 % \end{macros}
 % \end{macros}
 % \begin{macros}{rref,rref*,Rref,Rref*}
