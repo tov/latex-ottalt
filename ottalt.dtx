@@ -1,7 +1,7 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2011 by Jesse A. Tov <tov@ccs.neu.edu>
-% ----------------------------------------------------
+% Copyright (C) 2011-2013 by Jesse A. Tov <tov@eecs.harvard.edu>
+% --------------------------------------------------------------
 % 
 % This file may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.2
@@ -22,7 +22,7 @@
 %   *** The package file:
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{ottalt}
-%<package> [2011/08/07 v0.10 alternate Ott layout style]
+%<package> [2013/03/14 v0.11 alternate Ott layout style]
 %
 %   *** The driver file:
 %<driver>\NeedsTeXFormat{LaTeX2e}
@@ -30,13 +30,13 @@
 %   *** date, version, and stuff:
 %\fi
 %\ProvidesFile{ottalt}
-%  [2011/08/07 v0.10 alternate Ott layout style]
+%  [2013/03/14 v0.11 alternate Ott layout style]
 % ^^A   Bugfix: \texttt{Rrefrulestex} was
 % ^^A  |RULEs| by default; now it's |Rules|.
 % \changes{v0.2}{2011/03/30}{Included listproc.sty}
 % \changes{v0.1}{2011/03/25}{Initial documented release}
 %
-% \CheckSum{529}
+% \CheckSum{531}
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -170,7 +170,7 @@
 % \newnonterm G \Gamma
 %
 % \title{The \textsf{ottalt} package}
-% \author{Jesse A. Tov \\ \texttt{tov@ccs.neu.edu}}
+% \author{Jesse A. Tov \\ \texttt{tov@eecs.harvard.edu}}
 % \date{This document
 %   corresponds to \textsf{\filename}~\fileversion, dated \filedate.}
 % 
@@ -361,7 +361,7 @@ G |- e[t] : {t/a}t'
 %   \item[\sf{ifthen}] Standard \LaTeX{} package
 %   \item[\sf{keyval}] Standard \LaTeX{} package
 %   \item[\sf{listproc}] Non-standard, available at
-%     \url{http://www.ccs.neu.edu/~tov/code/latex/}
+%     \url{http://www.eecs.harvard.edu/~tov/code/latex/}
 %   \item[\sf{mathpartir}] Non-standard, available at
 %     \url{http://cristal.inria.fr/~remy/latex/}
 % \end{description}
@@ -1183,12 +1183,14 @@ G |- e[t] : {t/a}t'
   {\trivlist\item
    \ifx#1\relax\else\def\ottalt@rulesection@prefix{#1-}\fi
    \drulesectionhead{#2}{#3}%
+   \nopagebreak[4]%
    \noindent}
   {\endtrivlist}
 \newenvironment{rulesection*}[3][\relax]
   {\trivlist\item
    \ifx#1\relax\else\def\ottalt@rulesection@prefix{#1-}\fi
    \drulesectionhead*{#2}{#3}%
+   \nopagebreak[4]%
    \noindent}
   {\endtrivlist}
 \newcommand\ottalt@rulesection@prefix{}
@@ -1211,6 +1213,11 @@ G |- e[t] : {t/a}t'
   \par
 }
 %    \end{macrocode}
+% \changes{v0.11}{2013/03/14}{
+%   Changed \useenviron{rulesection}, \useenviron{rulesection*} and
+%   derived environments to suppress page breaks after the rule
+%   section head.
+% }
 % \end{macros}
 % \end{environment}
 % \end{environment}
@@ -1518,7 +1525,7 @@ metavar a {{ tex \nonterm a }} ::= {{ com type variables }}
 
 grammar
 formula :: formula_ ::= {{ com formulas from meta-language }}
-  | judgement    :: :: judegment
+  | judgement    :: :: judgement
   | formula \\\\ :: :: lbh {{ tex [[formula]] \ottlinebreakhack }}
   | x : t in G   :: :: xinenv
   | a in G       :: :: ainenv
@@ -1534,6 +1541,10 @@ terminals :: terminals_ ::=
   | empty        :: :: empty     {{ tex \bullet }}
 %</ott>
 %    \end{macrocode}
+% \changes{v0.11}{2013/03/14}{
+%   Fixed typo in formula production that was
+%   preventing ott example from parsing.
+% }
 %
 % \Finale
 %
